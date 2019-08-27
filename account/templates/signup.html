@@ -1,0 +1,65 @@
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <title>ClassMemberSystem</title>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="/index">TABC</a>
+    <a href="/index"><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link"></span></a>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Email">
+        <input class="form-control mr-sm-2" type="password" placeholder="Password">
+        <button class="btn btn-success" type="submit">Sign in</button>
+        <a href="/signup"><button class="btn btn-primary" type="button">Register</button></a>
+      </form>
+    </div>
+  </nav>
+
+  <main role="main">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="container">
+      <h1>Register</h1>
+      <form method="POST" action="/signup/post">
+        <label>輸入你的帳號</label>
+        <input class="form-control" type="text" name="uname">
+        <label>輸入你的密碼</label>
+        <input class="form-control" type="password" name="pw">
+        <label>輸入你的姓名</label>
+        <input class="form-control" type="text" name="rname">
+        <label>輸入你的E-mail</label>
+        <input class="form-control" type="text" name="uemail">
+        <br>
+        {% csrf_token %}
+        <button class="btn btn-primary btn-block">Submit</button>
+      </form>
+    </div>
+    <!-- Bootstrap core JavaScript
+  ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>
+      window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
+    </script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

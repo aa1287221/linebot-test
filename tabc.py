@@ -79,7 +79,7 @@ def news():
     browser.quit()
     return content
 
-def flex(Title,title,label1,text1,data1,label2):
+def flex(Title,title,label1,data1,label2):
     bubble = BubbleContainer(
             direction='ltr',
             hero=ImageComponent(
@@ -107,7 +107,7 @@ def flex(Title,title,label1,text1,data1,label2):
                         style='primary',
                         height='sm',
                         color = '#0B74A5',
-                        action=PostbackAction(label=label1, text=text1,data=data1),
+                        action=PostbackAction(label=label1,data=data1),
                     ),
                     # separator
                     SeparatorComponent(),
@@ -124,7 +124,7 @@ def flex(Title,title,label1,text1,data1,label2):
     message = FlexSendMessage(alt_text= Title , contents=bubble)
     return message
 
-def flexbutton(Title,title,label1,text1,data1,label2):
+def flexbutton(Title,title,label1,data1,label2):
     bubble = BubbleContainer(
             direction='ltr',
             hero=ImageComponent(
@@ -151,7 +151,7 @@ def flexbutton(Title,title,label1,text1,data1,label2):
                         style='primary',
                         height='sm',
                         color = '#624490',
-                        action=PostbackAction(label=label1,text=text1,data=data1),
+                        action=PostbackAction(label=label1,data=data1),
                     ),
                     SeparatorComponent(),
                     # websiteAction
@@ -173,11 +173,13 @@ def handle_postback(event):
     profile = line_bot_api.get_profile(event.source.user_id)
 
     if postback == '會員專區':
-        line_bot_api.reply_message(event.reply_token, flex("會員專區",'會員專區','課程報到','報到','報到','註冊會員'))
+        line_bot_api.reply_message(event.reply_token, flex("會員專區",'會員專區','課程報到','報到','註冊會員'))
+    elif postback == '報到':
+        line_bot_api.reply_message(event.reply_token, TextSendMessage("請輸入你的身份證字號，第一碼請使用大寫"))
     elif postback == '最新消息':
         line_bot_api.reply_message(event.reply_token, TextSendMessage(news()))
     elif postback == '其他功能':
-        line_bot_api.reply_message(event.reply_token, flexbutton("其他功能",'其他功能','優惠折扣','優惠折扣','優惠','聯絡我們'))
+        line_bot_api.reply_message(event.reply_token, flexbutton("其他功能",'其他功能','優惠折扣','優惠','聯絡我們'))
     elif postback == '優惠':
         line_bot_api.reply_message(event.reply_token, TextSendMessage('很抱歉，暫時沒有可用的優惠代碼'))
     '''
@@ -187,17 +189,16 @@ def handle_postback(event):
 
 @handler.add(MessageEvent, message=(ImageMessage, TextMessage))
 def handle_message(event):
-    msg = [None]
     msg = event.message.text
-    if msg == '報到':
-        line_bot_api.reply_message(event.reply_token, TextSendMessage("請輸入你的身份證字號"))
-        if isinstance(event, MessageEvent):
-            try:
-                line_bot_api.reply_message(event.reply_token, qrcode(msg))
-            except:
-                line_bot_api.reply_message(event.reply_token, TextSendMessage("找不到你的身份證字號，請確認英文是否為大寫"))
+    if isinstance(event, MessageEvent):
+        try:
+            line_bot_api.reply_message(event.reply_token, qrcode(msg))
+        except:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage("除非有要求輸入數值，否則使用本系統請全程使用按鈕選單，當輸入數值找不到時，請重新確認一次大小寫，以及是否有報名課程，謝謝。"))
+    '''
     elif msg == 'F130129738':
         line_bot_api.reply_message(event.reply_token, qrcode(msg))
+    '''
 @app.route("/", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
